@@ -27,6 +27,9 @@ class Header extends React.Component {
   };
 
   render() {
+    const { today, prevWeek, nextWeek } = this.props;
+    const monthDisplayed = months[1]; // TO DO
+
     return (
       <>
         <header className="header">
@@ -38,26 +41,23 @@ class Header extends React.Component {
             Create
           </button>
           <div className="navigation">
-            <button
-              className="navigation__today-btn button"
-              onClick={this.props.today}
-            >
+            <button className="navigation__today-btn button" onClick={today}>
               Today
             </button>
             <button
               className="icon-button navigation__nav-icon"
-              onClick={this.props.prevWeek}
+              onClick={prevWeek}
             >
               <i className="fas fa-chevron-left"></i>
             </button>
             <button
               className="icon-button navigation__nav-icon"
-              onClick={this.props.nextWeek}
+              onClick={nextWeek}
             >
               <i className="fas fa-chevron-right"></i>
             </button>
             <span className="navigation__displayed-month">
-              {months[new Date().getMonth()]}
+              {monthDisplayed}
             </span>
           </div>
         </header>

@@ -23,7 +23,7 @@ const Day = ({ dataDay, dayEvents, today }) => {
               dataHour={hour}
               hourEvents={hourEvents}
             />
-            <RedLine today={today} />
+            {/* <RedLine today={today} /> */}
           </>
         );
       })}
