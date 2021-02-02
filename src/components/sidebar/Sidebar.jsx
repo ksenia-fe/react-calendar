@@ -9,8 +9,9 @@ const Sidebar = (props) => {
 
   return (
     <div className="calendar__time-scale">
-      {hours.map((hour) => (
-        <div className="time-slot">
+      {hours.map((hour, ind) => (
+        <div className="time-slot" key={ind}>
+          {/*to do keys */}
           <span className="time-slot__time">{`${hour}:00`}</span>
         </div>
       ))}
