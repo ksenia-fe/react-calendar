@@ -1,5 +1,6 @@
 // REFACTORED. TO DO MONTH DISPLAYED
 import React, { useState } from "react";
+import moment from "moment";
 
 import Modal from "../modal/Modal";
 import { months } from "../../utils/dateUtils.js";
@@ -10,14 +11,21 @@ const Header = ({
   setTodaysDate,
   prevWeek,
   events,
+  weekDates,
   nextWeek,
-  weekStartDate,
   handleEventsRequest,
 }) => {
   const [isModalVisible, toggleModalVisibility] = useState(false);
-  // const displayedMonth =
-  //   weekStartDate.getMonth() ===
-  //   weekStartDate.setDay(weekStartDate.getDay() + 7).getMonth(); // TO DO
+
+  const firstDayOfCurrentWeek = weekDates[0];
+  const lastDayOfCurrentWeek = weekDates[weekDates.length - 1];
+
+  const monthDisplayed =
+    firstDayOfCurrentWeek.getMonth() === lastDayOfCurrentWeek.getMonth()
+      ? `${months[firstDayOfCurrentWeek.getMonth()]}`
+      : `${months[firstDayOfCurrentWeek.getMonth()]} - ${
+          months[lastDayOfCurrentWeek.getMonth()]
+        }`;
 
   return (
     <>
@@ -48,9 +56,7 @@ const Header = ({
           >
             <i className="fas fa-chevron-right"></i>
           </button>
-          <span className="navigation__displayed-month">
-            {months[weekStartDate.getMonth()]}
-          </span>
+          <span className="navigation__displayed-month">{monthDisplayed}</span>
         </div>
       </header>
       {isModalVisible && (

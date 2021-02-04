@@ -62,6 +62,7 @@ const App = () => {
         setTodaysDate={setTodaysDate}
         weekStartDate={weekStartDate}
         events={events}
+        weekDates={weekDates}
       />
       <Calendar
         weekDates={weekDates}
