@@ -1,115 +1,89 @@
-import React from "react";
-import events from "../../gateway/events";
+// REFACTORED TO DO DISPLAING CREATED EVENTS
+import React, { useState } from "react";
+import moment from "moment";
+
+import { createEvent } from "../../gateway/events";
+import { getDateTime } from "../../utils/dateUtils";
+
 import "./modal.scss";
 
-class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      date: "",
-      dateFrom: "",
-      dateTo: "",
-      description: "",
+const Modal = ({ handleEventsRequest, closeModal, events }) => {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [description, setDescription] = useState("");
+
+  const createEventHandler = (event) => {
+    event.preventDefault();
+
+    const newEvent = {
+      title,
+      dateFrom: getDateTime(date, startTime),
+      dateTo: getDateTime(date, endTime),
+      description,
+      status: false,
     };
-  }
 
-  handleTitle = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
+    createEvent(newEvent).then(() => handleEventsRequest());
+    closeModal();
   };
 
-  handleDate = (e) => {
-    this.setState({
-      date: e.target.value,
-    });
-  };
-
-  handleStartTime = (e) => {
-    this.setState({
-      dateFrom: e.target.value,
-    });
-  };
-
-  handleEndTime = (e) => {
-    this.setState({
-      dateTo: e.target.value,
-    });
-  };
-
-  handleDescription = (e) => {
-    this.setState({
-      description: e.target.value,
-    });
-  };
-
-  createEvent = (e) => {
-    e.preventDefault();
-    events.push(this.state);
-    console.log(events);
-  };
-
-  render() {
-    return (
-      <div className="modal overlay">
-        <div className="modal__content">
-          <div className="create-event">
-            <button
-              className="create-event__close-btn"
-              onClick={this.props.closeModal}
-            >
-              +
-            </button>
-            <form className="event-form" onSubmit={this.createEvent}>
+  return (
+    <div className="modal overlay">
+      <div className="modal__content">
+        <div className="create-event">
+          <button className="create-event__close-btn" onClick={closeModal}>
+            +
+          </button>
+          <form className="event-form" onSubmit={createEventHandler}>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              className="event-form__field"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
+            <div className="event-form__time">
               <input
-                type="text"
-                name="title"
-                placeholder="Title"
+                type="date"
+                name="date"
                 className="event-form__field"
-                onChange={this.handleTitle}
-                value={this.state.title}
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
               />
-              <div className="event-form__time">
-                <input
-                  type="date"
-                  name="date"
-                  className="event-form__field"
-                  onChange={this.handleDate}
-                  value={this.state.date}
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  className="event-form__field"
-                  onChange={this.handleStartTime}
-                  value={this.state.dateFrom}
-                />
-                <span>-</span>
-                <input
-                  type="time"
-                  name="endTime"
-                  className="event-form__field"
-                  onChange={this.handleEndTime}
-                  value={this.state.dateTo}
-                />
-              </div>
-              <textarea
-                name="description"
-                placeholder="Description"
+              <input
+                type="time"
+                name="startTime"
                 className="event-form__field"
-                onChange={this.handleDescription}
-                value={this.state.description}
-              ></textarea>
-              <button type="submit" className="event-form__submit-btn">
-                Create
-              </button>
-            </form>
-          </div>
+                onChange={(e) => setStartTime(e.target.value)}
+                value={startTime}
+              />
+              <span>-</span>
+              <input
+                type="time"
+                name="endTime"
+                className="event-form__field"
+                onChange={(e) => setEndTime(e.target.value)}
+                value={endTime}
+              />
+            </div>
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="event-form__field"
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+            ></textarea>
+            <button type="submit" className="event-form__submit-btn">
+              Create
+            </button>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Modal;

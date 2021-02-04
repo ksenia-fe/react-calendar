@@ -1,56 +1,31 @@
-import React from "react";
+// REFACTORED TO DO DELETING EVENT
+import React, { useState } from "react";
 import "./event.scss";
 
-class Event extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      eventStyle: {
-        height: this.props.height,
-        marginTop: this.props.marginTop,
-      },
-      isDeleteBtnVisible: false,
-      isEventIsVisible: true,
-    };
-  }
+const Event = ({ title, time, handleDeleteEvent, height, marginTop, id }) => {
+  const [isDeleteBtnVisible, toggleDeleteBtnVisibility] = useState(false);
 
-  showDeleteBtn = () => {
-    this.setState({
-      isDeleteBtnVisible: !this.state.isDeleteBtnVisible,
-    });
+  const eventStyle = {
+    height,
+    marginTop,
   };
 
-  deleteEvent = () => {
-    this.setState({
-      isDeleteBtnVisible: false,
-      isEventIsVisible: false,
-    });
-  };
-
-  render() {
-    const { eventStyle } = this.state;
-
-    return (
-      <>
-        {this.state.isEventIsVisible && (
-          <div
-            style={eventStyle}
-            className="event"
-            onClick={this.showDeleteBtn}
-          >
-            <div className="event__title">{this.props.title}</div>
-            <div className="event__time">{this.props.time}</div>
-          </div>
-        )}
-        {this.state.isDeleteBtnVisible && (
-          <div className="delete-event-btn" onClick={this.deleteEvent}>
-            <i className="fas fa-trash"></i>
-            <span> Delete</span>
-          </div>
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <div
+      className="event"
+      style={eventStyle}
+      onClick={() => toggleDeleteBtnVisibility(!isDeleteBtnVisible)}
+    >
+      <div className="event__title">{title}</div>
+      <div className="event__time">{time}</div>
+      {isDeleteBtnVisible && (
+        <div className="delete-event-btn" onClick={() => handleDeleteEvent(id)}>
+          <i className="fas fa-trash"></i>
+          <span> Delete</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Event;

@@ -1,15 +1,43 @@
 import React, { useEffect, useState } from "react";
+
 import Header from "./components/header/Header.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
+import { fetchEvents, updateEvent, deleteEvent } from "./gateway/events";
 import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
 
 import "./common.scss";
 
 const App = () => {
   const [weekStartDate, setweekStartDate] = useState(new Date());
+  const [events, setEvents] = useState([]);
+
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
-  const today = () => {
+  useEffect(() => {
+    handleEventsRequest();
+  }, []);
+
+  function handleEventsRequest() {
+    fetchEvents()
+      .then((events) => setEvents(events))
+      .catch((error) => alert(error.message));
+  }
+
+  const handleDeleteEvent = (id) => {
+    deleteEvent(id).then(() => handleEventsRequest());
+  };
+
+  const handleStatusEvent = (id) => {
+    const { statusEvent, ...task } = events.find((item) => item.id == id);
+    const updatedEvents = {
+      statusEvent: !statusEvent,
+      ...task,
+    };
+
+    updateEvent(id, updatedEvents).then(() => handleEventsRequest());
+  };
+
+  const setTodaysDate = () => {
     setweekStartDate(new Date());
   };
 
@@ -27,39 +55,25 @@ const App = () => {
 
   return (
     <>
-      <Header prevWeek={prevWeek} nextWeek={nextWeek} today={today} />
-      <Calendar weekDates={weekDates} today={today} />
+      <Header
+        prevWeek={prevWeek}
+        nextWeek={nextWeek}
+        handleEventsRequest={handleEventsRequest}
+        setTodaysDate={setTodaysDate}
+        weekStartDate={weekStartDate}
+        events={events}
+      />
+      <Calendar
+        weekDates={weekDates}
+        today={weekStartDate}
+        weekDates={weekDates}
+        handleEventsRequest={handleEventsRequest}
+        handleDeleteEvent={handleDeleteEvent}
+        handleStatusEvent={handleStatusEvent}
+        events={events}
+      />
     </>
   );
 };
-
-// class App extends Component {
-//   state = {
-//     weekStartDate: new Date(),
-//   };
-
-//   prevWeek = () => {
-//     // console.log("prev");
-//     setweekStartDate(
-//       this.state.weekStartDate.setDate(this.state.weekStartDate.getDate() - 7)
-//     );
-//   };
-
-//   nextWeek = () => {
-//     console.log("next");
-//   };
-
-//   render() {
-//     const { weekStartDate } = this.state;
-//     const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
-
-//     return (
-//       <>
-//         <Header prevWeek={this.prevWeek} nextWeek={this.nextWeek} />
-//         <Calendar weekDates={weekDates} />
-//       </>
-//     );
-//   }
-// }
 
 export default App;
