@@ -1,11 +1,5 @@
 import React from "react";
 
-// const RedLine = () => {
-//   const style = { marginTop: new Date().getMinutes() };
-
-//   return <div className="red-line" style={style}></div>;
-// };
-
 class RedLine extends React.Component {
   constructor(props) {
     super(props);
