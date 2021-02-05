@@ -22,7 +22,10 @@ const Week = ({
         );
 
         const daysWithWithoutLine = [];
-        daysWithWithoutLine.push(new Date().getDay() === dayStart.getDay());
+        daysWithWithoutLine.push(
+          new Date().getDate() === dayStart.getDate() &&
+            new Date().getMonth() === dayStart.getMonth()
+        );
 
         return (
           <Day
