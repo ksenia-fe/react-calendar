@@ -21,7 +21,7 @@ const Event = ({ title, time, handleDeleteEvent, height, marginTop, id }) => {
       {isDeleteBtnVisible && (
         <div className="delete-event-btn" onClick={() => handleDeleteEvent(id)}>
           <i className="fas fa-trash"></i>
-          <span> Delete</span>
+          <span className="delete-event-btn__title">Delete</span>
         </div>
       )}
     </div>
