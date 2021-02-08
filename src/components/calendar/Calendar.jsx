@@ -23,7 +23,6 @@ const Calendar = ({
           <Sidebar />
           <Week
             weekDates={weekDates}
-            today={today}
             handleStatusEvent={handleStatusEvent}
             handleDeleteEvent={handleDeleteEvent}
             handleEventsRequest={handleEventsRequest}

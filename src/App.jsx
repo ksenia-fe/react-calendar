@@ -61,7 +61,6 @@ const App = () => {
         handleEventsRequest={handleEventsRequest}
         setTodaysDate={setTodaysDate}
         weekStartDate={weekStartDate}
-        events={events}
         weekDates={weekDates}
       />
       <Calendar

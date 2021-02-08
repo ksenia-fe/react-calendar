@@ -1,29 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-class RedLine extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      minutes: new Date().getMinutes(),
-    };
-  }
+const RedLine = () => {
+  const [hour, setHour] = useState(new Date().getHours());
+  const [minutes, setMinutes] = useState(new Date().getMinutes());
 
-  componentDidMount = () => {
-    this.intervalId = setInterval(() => {
-      this.setState({
-        minutes: this.state.minutes + 1,
-      });
+  useEffect(() => {
+    if (minutes === 60) {
+      setMinutes(0);
+      setHour(hour + 1);
+    }
+    const interval = setInterval(() => {
+      setMinutes(minutes + 1);
     }, 60000);
-  };
 
-  componentWillUnmount = () => {
-    clearInterval(this.intervalId);
-  };
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
-  render() {
-    return (
-      <div className="red-line" style={{ marginTop: this.state.minutes }}></div>
-    );
-  }
-}
+  return <div className="red-line" style={{ marginTop: minutes }}></div>;
+};
 export default RedLine;

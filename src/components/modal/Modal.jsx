@@ -1,4 +1,3 @@
-// REFACTORED TO DO DISPLAING CREATED EVENTS
 import React, { useState } from "react";
 import moment from "moment";
 
@@ -7,7 +6,7 @@ import { getDateTime } from "../../utils/dateUtils";
 
 import "./modal.scss";
 
-const Modal = ({ handleEventsRequest, closeModal, events }) => {
+const Modal = ({ handleEventsRequest, closeModal }) => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
   const [startTime, setStartTime] = useState("");

@@ -1,6 +1,4 @@
-// REFACTORED. TO DO MONTH DISPLAYED
 import React, { useState } from "react";
-import moment from "moment";
 
 import Modal from "../modal/Modal";
 import { months } from "../../utils/dateUtils.js";
@@ -10,7 +8,6 @@ import "./header.scss";
 const Header = ({
   setTodaysDate,
   prevWeek,
-  events,
   weekDates,
   nextWeek,
   handleEventsRequest,
@@ -62,7 +59,6 @@ const Header = ({
       {isModalVisible && (
         <Modal
           closeModal={() => toggleModalVisibility(!isModalVisible)}
-          events={events}
           handleEventsRequest={handleEventsRequest}
         />
       )}
