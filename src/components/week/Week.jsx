@@ -1,4 +1,3 @@
-// check props
 import React from "react";
 import Day from "../day/Day";
 import "./week.scss";
@@ -30,7 +29,6 @@ const Week = ({
         return (
           <Day
             key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
             dayEvents={dayEvents}
             handleStatusEvent={handleStatusEvent}
             handleDeleteEvent={handleDeleteEvent}

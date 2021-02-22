@@ -1,11 +1,9 @@
-// check props
 import React from "react";
 import Hour from "../hour/Hour";
 import "./day.scss";
 import RedLine from "../redLine/RedLine";
 
 const Day = ({
-  dataDay,
   dayEvents,
   daysWithWithoutLine,
   today,
@@ -19,7 +17,7 @@ const Day = ({
     .map((val, index) => index);
 
   return (
-    <div className="calendar__day" data-day={dataDay}>
+    <div className="calendar__day">
       {hours.map((hour) => {
         const hourEvents = dayEvents.filter(
           (event) => event.dateFrom.getHours() === hour
@@ -33,7 +31,6 @@ const Day = ({
                 new Date().getHours() === hour && <RedLine today={today} />
             )}
             <Hour
-              key={dataDay + hour}
               dataHour={hour}
               hourEvents={hourEvents}
               handleStatusEvent={handleStatusEvent}
