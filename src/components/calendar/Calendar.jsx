@@ -9,9 +9,7 @@ import "./calendar.scss";
 
 const Calendar = ({
   weekDates,
-  today,
-  handleEventsRequest,
-  handleDeleteEvent,
+  requestForEvents,
   handleStatusEvent,
   events,
 }) => {
@@ -24,8 +22,7 @@ const Calendar = ({
           <Week
             weekDates={weekDates}
             handleStatusEvent={handleStatusEvent}
-            handleDeleteEvent={handleDeleteEvent}
-            handleEventsRequest={handleEventsRequest}
+            requestForEvents={requestForEvents}
             events={events}
           />
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Header from "./components/header/Header.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
-import { fetchEvents, updateEvent, deleteEvent } from "./gateway/events";
+import { fetchEvents, updateEvent } from "./gateway/events";
 import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
 
 import "./common.scss";
@@ -14,17 +14,13 @@ const App = () => {
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
   useEffect(() => {
-    handleEventsRequest();
+    requestForEvents();
   }, []);
 
-  function handleEventsRequest() {
+  const requestForEvents = () => {
     fetchEvents()
       .then((events) => setEvents(events))
       .catch((error) => alert(error.message));
-  }
-
-  const handleDeleteEvent = (id) => {
-    deleteEvent(id).then(() => handleEventsRequest());
   };
 
   const handleStatusEvent = (id) => {
@@ -34,41 +30,33 @@ const App = () => {
       ...task,
     };
 
-    updateEvent(id, updatedEvents).then(() => handleEventsRequest());
-  };
-
-  const setTodaysDate = () => {
-    setweekStartDate(new Date());
-  };
-
-  const prevWeek = () => {
-    setweekStartDate(
-      new Date(weekStartDate.setDate(weekStartDate.getDate() - 7))
-    );
-  };
-
-  const nextWeek = () => {
-    setweekStartDate(
-      new Date(weekStartDate.setDate(weekStartDate.getDate() + 7))
-    );
+    updateEvent(id, updatedEvents).then(() => requestForEvents());
   };
 
   return (
     <>
       <Header
-        prevWeek={prevWeek}
-        nextWeek={nextWeek}
-        handleEventsRequest={handleEventsRequest}
-        setTodaysDate={setTodaysDate}
+        prevWeek={() => {
+          setweekStartDate(
+            new Date(weekStartDate.setDate(weekStartDate.getDate() - 7))
+          );
+        }}
+        nextWeek={() => {
+          setweekStartDate(
+            new Date(weekStartDate.setDate(weekStartDate.getDate() + 7))
+          );
+        }}
+        requestForEvents={requestForEvents}
+        setTodaysDate={() => {
+          setweekStartDate(new Date());
+        }}
         weekStartDate={weekStartDate}
         weekDates={weekDates}
       />
       <Calendar
         weekDates={weekDates}
-        today={weekStartDate}
         weekDates={weekDates}
-        handleEventsRequest={handleEventsRequest}
-        handleDeleteEvent={handleDeleteEvent}
+        requestForEvents={requestForEvents}
         handleStatusEvent={handleStatusEvent}
         events={events}
       />

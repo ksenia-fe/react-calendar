@@ -6,12 +6,16 @@ import { getDateTime } from "../../utils/dateUtils";
 
 import "./modal.scss";
 
-const Modal = ({ handleEventsRequest, closeModal }) => {
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [description, setDescription] = useState("");
+const Modal = ({ requestForEvents, closeModal }) => {
+  const [eventInfo, setEventInfo] = useState({
+    title: "",
+    date: moment(new Date()).format("YYYY-MM-DD"),
+    startTime: "",
+    endTime: "",
+    description: "",
+  });
+
+  const { title, date, startTime, endTime, description } = eventInfo;
 
   const createEventHandler = (event) => {
     event.preventDefault();
@@ -24,7 +28,7 @@ const Modal = ({ handleEventsRequest, closeModal }) => {
       status: false,
     };
 
-    createEvent(newEvent).then(() => handleEventsRequest());
+    createEvent(newEvent).then(() => requestForEvents());
     closeModal();
   };
 
@@ -41,7 +45,9 @@ const Modal = ({ handleEventsRequest, closeModal }) => {
               name="title"
               placeholder="Title"
               className="event-form__field"
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, title: e.target.value })
+              }
               value={title}
             />
             <div className="event-form__time">
@@ -49,14 +55,18 @@ const Modal = ({ handleEventsRequest, closeModal }) => {
                 type="date"
                 name="date"
                 className="event-form__field"
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) =>
+                  setEventInfo({ ...eventInfo, date: e.target.value })
+                }
                 value={date}
               />
               <input
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                onChange={(e) => setStartTime(e.target.value)}
+                onChange={(e) =>
+                  setEventInfo({ ...eventInfo, startTime: e.target.value })
+                }
                 value={startTime}
               />
               <span>-</span>
@@ -64,7 +74,9 @@ const Modal = ({ handleEventsRequest, closeModal }) => {
                 type="time"
                 name="endTime"
                 className="event-form__field"
-                onChange={(e) => setEndTime(e.target.value)}
+                onChange={(e) =>
+                  setEventInfo({ ...eventInfo, endTime: e.target.value })
+                }
                 value={endTime}
               />
             </div>
@@ -72,7 +84,9 @@ const Modal = ({ handleEventsRequest, closeModal }) => {
               name="description"
               placeholder="Description"
               className="event-form__field"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, description: e.target.value })
+              }
               value={description}
             ></textarea>
             <button type="submit" className="event-form__submit-btn">

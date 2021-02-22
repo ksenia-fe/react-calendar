@@ -8,7 +8,7 @@ const Hour = ({
   hourEvents,
   handleStatusEvent,
   events,
-  handleDeleteEvent,
+  requestForEvents,
 }) => {
   return (
     <>
@@ -30,7 +30,7 @@ const Hour = ({
               title={title}
               events={events}
               handleStatusEvent={handleStatusEvent}
-              handleDeleteEvent={handleDeleteEvent}
+              requestForEvents={requestForEvents}
               id={id}
               description={description}
             />

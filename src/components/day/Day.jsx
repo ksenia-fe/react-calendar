@@ -4,20 +4,20 @@ import "./day.scss";
 import RedLine from "../redLine/RedLine";
 
 const Day = ({
+  dataDay,
   dayEvents,
   daysWithWithoutLine,
   today,
-  handleDeleteEvent,
+  requestForEvents,
   handleStatusEvent,
   events,
-  handleEventsRequest,
 }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
 
   return (
-    <div className="calendar__day">
+    <div className="calendar__day" data-day={dataDay}>
       {hours.map((hour) => {
         const hourEvents = dayEvents.filter(
           (event) => event.dateFrom.getHours() === hour
@@ -31,11 +31,11 @@ const Day = ({
                 new Date().getHours() === hour && <RedLine today={today} />
             )}
             <Hour
+              key={dataDay + hour}
               dataHour={hour}
               hourEvents={hourEvents}
               handleStatusEvent={handleStatusEvent}
-              handleDeleteEvent={handleDeleteEvent}
-              handleEventsRequest={handleEventsRequest}
+              requestForEvents={requestForEvents}
               events={events}
             />
           </>

@@ -10,7 +10,7 @@ const Header = ({
   prevWeek,
   weekDates,
   nextWeek,
-  handleEventsRequest,
+  requestForEvents,
 }) => {
   const [isModalVisible, toggleModalVisibility] = useState(false);
 
@@ -59,7 +59,7 @@ const Header = ({
       {isModalVisible && (
         <Modal
           closeModal={() => toggleModalVisibility(!isModalVisible)}
-          handleEventsRequest={handleEventsRequest}
+          requestForEvents={requestForEvents}
         />
       )}
     </>
