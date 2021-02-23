@@ -1,14 +1,12 @@
-// REFACTORED TO DO DELETING EVENT
 import React, { useState } from "react";
-import { deleteEvent } from "../../gateway/events";
 import "./event.scss";
 
-const Event = ({ title, time, requestForEvents, height, marginTop, id }) => {
+const Event = ({ title, time, handleDeleteEvent, dateFrom, dateTo, id }) => {
   const [isDeleteBtnVisible, toggleDeleteBtnVisibility] = useState(false);
 
   const eventStyle = {
-    height,
-    marginTop,
+    height: (dateTo.getTime() - dateFrom.getTime()) / (1000 * 60),
+    marginTop: dateFrom.getMinutes(),
   };
 
   return (
@@ -20,10 +18,7 @@ const Event = ({ title, time, requestForEvents, height, marginTop, id }) => {
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
       {isDeleteBtnVisible && (
-        <div
-          className="delete-event-btn"
-          onClick={() => deleteEvent(id).then(() => requestForEvents())}
-        >
+        <div className="delete-event-btn" onClick={() => handleDeleteEvent(id)}>
           <i className="fas fa-trash"></i>
           <span className="delete-event-btn__title">Delete</span>
         </div>

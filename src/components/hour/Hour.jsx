@@ -1,13 +1,14 @@
-// check props
 import React from "react";
 import Event from "../event/Event";
 import { formatMins } from "../../utils/dateUtils.js";
 
-const Hour = ({ hourEvents, requestForEvents }) => {
+const Hour = ({ hourEvents, handleDeleteEvent }) => {
   return (
     <>
       <div className="calendar__time-slot">
-        {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
+        {hourEvents.map((event) => {
+          const { dateFrom, dateTo } = event;
+
           const eventStart = `${dateFrom.getHours()}:${formatMins(
             dateFrom.getMinutes()
           )}`;
@@ -17,13 +18,10 @@ const Hour = ({ hourEvents, requestForEvents }) => {
 
           return (
             <Event
-              key={id}
-              height={(dateTo.getTime() - dateFrom.getTime()) / (1000 * 60)}
-              marginTop={dateFrom.getMinutes()}
+              key={event.id}
+              {...event}
               time={`${eventStart} - ${eventEnd}`}
-              title={title}
-              requestForEvents={requestForEvents}
-              id={id}
+              handleDeleteEvent={handleDeleteEvent}
             />
           );
         })}

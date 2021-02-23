@@ -1,4 +1,3 @@
-// +
 import React from "react";
 
 import Navigation from "./../navigation/Navigation";
@@ -7,7 +6,7 @@ import Sidebar from "../sidebar/Sidebar";
 
 import "./calendar.scss";
 
-const Calendar = ({ weekDates, requestForEvents, events }) => {
+const Calendar = ({ weekDates, handleDeleteEvent, events }) => {
   return (
     <section className="calendar">
       <Navigation weekDates={weekDates} />
@@ -16,7 +15,7 @@ const Calendar = ({ weekDates, requestForEvents, events }) => {
           <Sidebar />
           <Week
             weekDates={weekDates}
-            requestForEvents={requestForEvents}
+            handleDeleteEvent={handleDeleteEvent}
             events={events}
           />
         </div>

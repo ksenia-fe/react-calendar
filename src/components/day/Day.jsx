@@ -3,7 +3,7 @@ import Hour from "../hour/Hour";
 import "./day.scss";
 import RedLine from "../redLine/RedLine";
 
-const Day = ({ dayEvents, daysWithWithoutLine, requestForEvents }) => {
+const Day = ({ dayEvents, daysWithWithoutLine, handleDeleteEvent }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -21,7 +21,10 @@ const Day = ({ dayEvents, daysWithWithoutLine, requestForEvents }) => {
               (bool, ind) =>
                 bool === true && new Date().getHours() === hour && <RedLine />
             )}
-            <Hour hourEvents={hourEvents} requestForEvents={requestForEvents} />
+            <Hour
+              hourEvents={hourEvents}
+              handleDeleteEvent={handleDeleteEvent}
+            />
           </>
         );
       })}

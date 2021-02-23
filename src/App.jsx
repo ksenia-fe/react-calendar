@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Header from "./components/header/Header.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
-import { fetchEvents, updateEvent } from "./gateway/events";
+import { fetchEvents, updateEvent, deleteEvent } from "./gateway/events";
 import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
 
 import "./common.scss";
@@ -33,6 +33,9 @@ const App = () => {
     updateEvent(id, updatedEvents).then(() => requestForEvents());
   };
 
+  const handleDeleteEvent = (id) =>
+    deleteEvent(id).then(() => requestForEvents());
+
   return (
     <>
       <Header
@@ -56,7 +59,7 @@ const App = () => {
       <Calendar
         weekDates={weekDates}
         weekDates={weekDates}
-        requestForEvents={requestForEvents}
+        handleDeleteEvent={handleDeleteEvent}
         handleStatusEvent={handleStatusEvent}
         events={events}
       />
