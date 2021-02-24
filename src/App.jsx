@@ -10,8 +10,6 @@ import "./common.scss";
 const App = () => {
   const [weekStartDate, setweekStartDate] = useState(new Date());
   const [events, setEvents] = useState([]);
-  // console.log(events);
-  // fetchEvents().then((data) => console.log(data));
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
