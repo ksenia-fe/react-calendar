@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
@@ -22,6 +23,16 @@ const Calendar = ({ weekDates, handleDeleteEvent, events }) => {
       </div>
     </section>
   );
+};
+
+Calendar.propTypes = {
+  handleDeleteEvent: PropTypes.func.isRequired,
+  weekDates: PropTypes.array.isRequired,
+  events: PropTypes.array,
+};
+
+Calendar.defaultProps = {
+  events: [],
 };
 
 export default Calendar;

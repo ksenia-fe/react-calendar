@@ -1,6 +1,7 @@
 import React from "react";
 import Event from "../event/Event";
 import { formatMins } from "../../utils/dateUtils.js";
+import PropTypes from "prop-types";
 
 const Hour = ({ hourEvents, handleDeleteEvent }) => {
   return (
@@ -28,6 +29,15 @@ const Hour = ({ hourEvents, handleDeleteEvent }) => {
       </div>
     </>
   );
+};
+
+Hour.propTypes = {
+  handleDeleteEvent: PropTypes.func.isRequired,
+  hourEvents: PropTypes.array,
+};
+
+Hour.defaultprops = {
+  hourEvents: [],
 };
 
 export default Hour;

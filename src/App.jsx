@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Header from "./components/header/Header.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
-import { fetchEvents, updateEvent, deleteEvent } from "./gateway/events";
+import { fetchEvents, deleteEvent } from "./gateway/events";
 import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
 
 import "./common.scss";
@@ -10,6 +10,8 @@ import "./common.scss";
 const App = () => {
   const [weekStartDate, setweekStartDate] = useState(new Date());
   const [events, setEvents] = useState([]);
+  // console.log(events);
+  // fetchEvents().then((data) => console.log(data));
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
@@ -21,16 +23,6 @@ const App = () => {
     fetchEvents()
       .then((events) => setEvents(events))
       .catch((error) => alert(error.message));
-  };
-
-  const handleStatusEvent = (id) => {
-    const { statusEvent, ...task } = events.find((item) => item.id == id);
-    const updatedEvents = {
-      statusEvent: !statusEvent,
-      ...task,
-    };
-
-    updateEvent(id, updatedEvents).then(() => requestForEvents());
   };
 
   const handleDeleteEvent = (id) =>
@@ -53,14 +45,12 @@ const App = () => {
         setTodaysDate={() => {
           setweekStartDate(new Date());
         }}
-        weekStartDate={weekStartDate}
         weekDates={weekDates}
       />
       <Calendar
         weekDates={weekDates}
         weekDates={weekDates}
         handleDeleteEvent={handleDeleteEvent}
-        handleStatusEvent={handleStatusEvent}
         events={events}
       />
     </>

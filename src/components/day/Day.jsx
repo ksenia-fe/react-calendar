@@ -2,6 +2,7 @@ import React from "react";
 import Hour from "../hour/Hour";
 import "./day.scss";
 import RedLine from "../redLine/RedLine";
+import PropTypes from "prop-types";
 
 const Day = ({ dayEvents, daysWithWithoutLine, handleDeleteEvent }) => {
   const hours = Array(24)
@@ -30,6 +31,16 @@ const Day = ({ dayEvents, daysWithWithoutLine, handleDeleteEvent }) => {
       })}
     </div>
   );
+};
+
+Day.propTypes = {
+  handleDeleteEvent: PropTypes.func.isRequired,
+  dayEvents: PropTypes.array,
+  daysWithWithoutLine: PropTypes.array.isRequired,
+};
+
+Day.defaultProps = {
+  dayEvents: [],
 };
 
 export default Day;

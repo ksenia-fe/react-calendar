@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./event.scss";
+import PropTypes from "prop-types";
 
-const Event = ({ title, time, handleDeleteEvent, dateFrom, dateTo, id }) => {
+const Event = ({ title, dateFrom, dateTo, id, time, handleDeleteEvent }) => {
   const [isDeleteBtnVisible, toggleDeleteBtnVisibility] = useState(false);
 
   const eventStyle = {
@@ -25,6 +26,22 @@ const Event = ({ title, time, handleDeleteEvent, dateFrom, dateTo, id }) => {
       )}
     </div>
   );
+};
+
+Event.propTypes = {
+  handleDeleteEvent: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  time: PropTypes.string,
+  title: PropTypes.string,
+  dateFrom: PropTypes.object,
+  dateTo: PropTypes.object,
+};
+
+Event.defaultProps = {
+  time: "",
+  title: "",
+  dateFrom: new Date(),
+  dateTo: new Date(),
 };
 
 export default Event;
