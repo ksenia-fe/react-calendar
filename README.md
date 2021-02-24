@@ -14,6 +14,6 @@ Toolchain:
 - Webpack
 - Babel
 
-Frameworks:
+Libs & frameworks:
 
 - React
