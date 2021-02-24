@@ -15,11 +15,19 @@ const App = () => {
 
   useEffect(() => {
     requestForEvents();
-  }, []);
+  }, [weekStartDate]);
 
   const requestForEvents = () => {
     fetchEvents()
-      .then((events) => setEvents(events))
+      .then((events) =>
+        setEvents(
+          events.filter(
+            (event) =>
+              new Date(event.dateFrom) > new Date(weekDates[0]) &&
+              new Date(event.dateFrom) < new Date(weekDates[6])
+          )
+        )
+      )
       .catch((error) => alert(error.message));
   };
 
